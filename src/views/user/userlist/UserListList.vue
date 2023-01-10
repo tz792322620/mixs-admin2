@@ -212,11 +212,11 @@ const init = (e) => {
   function handleDetail(record: Recordable) {
      // console.log(record)
      openInfoDialog(record)
-     // openModal(true, {
-     //   record,
-     //   isUpdate: true,
-     //   showFooter: false,
-     // });
+     openModal(true, {
+       record,
+       isUpdate: true,
+       showFooter: false,
+     });
    }
 
 
@@ -254,7 +254,7 @@ const init = (e) => {
    * 取消代理
    */
   function cancelAgent(record: Recordable) {
-    defHttp.post({url: '/userlist/userList/cancelAgent', params:record}).then(res=>{
+    defHttp.post({url: '/userlist/userList/disableAgentBackground', params:{id:record.id}}).then(res=>{
         reload()
     });
   }
@@ -341,10 +341,16 @@ const init = (e) => {
       {
         label: '设为代理',
         onClick: handleAgent.bind(null, record),
+        ifShow: (_action) => {
+          return record.type !== 1; // 根据业务控制是否显示: 非enable状态的不显示启用按钮
+        },
       },
       {
         label: '取消代理',
         onClick: cancelAgent.bind(null, record),
+        ifShow: (_action) => {
+          return record.type !== 0; // 根据业务控制是否显示: 非enable状态的不显示启用按钮
+        },
       },
       {
         label: '查看地理位置',

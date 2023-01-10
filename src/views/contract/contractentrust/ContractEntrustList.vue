@@ -144,6 +144,7 @@
          {
            label: '编辑',
            onClick: handleEdit.bind(null, record),
+           auth: 'other',
          }
        ]
    }
@@ -162,7 +163,8 @@
         popConfirm: {
           title: '是否确认删除',
           confirm: handleDelete.bind(null, record),
-        }
+        },
+        auth: 'other',
       }
     ]
   }

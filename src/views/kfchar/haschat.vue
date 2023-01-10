@@ -12,7 +12,6 @@
                   <div style="width: 11rem;height: 2rem;line-height: 2rem;">{{ item.userName }}</div>
                   </el-badge>
                 </div>
-
             </div>
           </el-scrollbar>
         </div>
@@ -123,7 +122,7 @@ const data = ref({})
 
 let websocket
 const getBoardData = (function () {
-  websocket = new WebSocket("ws://192.168.31.176:668/chat")
+  websocket = new WebSocket("ws://192.168.50.128:668/chat")
   // 链接发生错误的回调方法
   websocket.onerror = function() {
     console.log('websocket链接错误')

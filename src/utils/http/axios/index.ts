@@ -280,7 +280,7 @@ export const defHttp = createAxios();
 // other api url
 export const otherHttp = createAxios({
   requestOptions: {
-    apiUrl: 'http://192.168.31.176:8088/',
+    apiUrl: 'http://192.168.50.128:8088/',
     // apiUrl: 'http://192.168.31.185:8001/jeecg-boot',
     // 需要对返回数据进行处理
     isTransformResponse: false,
