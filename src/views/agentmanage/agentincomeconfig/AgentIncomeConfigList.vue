@@ -122,11 +122,11 @@
   function handleDetail(record: Recordable) {
     infoAgentId.value = record.id
     infoDialogVisible.value = true
-    //  openModal(true, {
-    //    record,
-    //    isUpdate: true,
-    //    showFooter: false,
-    //  });
+     openModal(true, {
+       record,
+       isUpdate: true,
+       showFooter: false,
+     });
   }
 
 

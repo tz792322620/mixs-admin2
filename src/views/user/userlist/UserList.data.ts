@@ -6,6 +6,11 @@ import {JVxeTypes,JVxeColumn} from '/@/components/jeecg/JVxeTable/types'
 //列表数据
 export const columns: BasicColumn[] = [
   {
+    title: '用户uuid',
+    align:"center",
+    dataIndex: 'uuid'
+  },
+  {
     title: '用户编号',
     align:"center",
     dataIndex: 'id'
@@ -33,6 +38,7 @@ export const columns: BasicColumn[] = [
       return render.renderDict(text, 'type');
     },
   },
+
   // {
   //   title: '认证等级',
   //   dataIndex: 'authorizeLevel',
@@ -258,47 +264,23 @@ export const userContractVirtualWalletColumns: JVxeColumn[] = [
 
     {
       title: '币种名',
-      key: 'virtualCoinName',
+      key: 'currency',
       type: JVxeTypes.input,
       width:"200px",
       placeholder: '请输入${title}',
       defaultValue:'',
     },
     {
-      title: '币种编号',
-      key: 'virtualCoinId',
+      title: '账号类型',
+      key: 'accountType',
       type: JVxeTypes.inputNumber,
       width:"200px",
       placeholder: '请输入${title}',
       defaultValue:'',
     },
     {
-      title: '交易前冻结',
-      key: 'beforeFreeze',
-      type: JVxeTypes.inputNumber,
-      width:"200px",
-      placeholder: '请输入${title}',
-      defaultValue:'',
-    },
-    {
-      title: '交易后冻结',
-      key: 'afterFreeze',
-      type: JVxeTypes.inputNumber,
-      width:"200px",
-      placeholder: '请输入${title}',
-      defaultValue:'',
-    },
-    {
-      title: '交易前余额',
-      key: 'beforeBalance',
-      type: JVxeTypes.inputNumber,
-      width:"200px",
-      placeholder: '请输入${title}',
-      defaultValue:'',
-    },
-    {
-      title: '交易后余额',
-      key: 'afterBalance',
+      title: '账号余额',
+      key: 'accountAmount',
       type: JVxeTypes.inputNumber,
       width:"200px",
       placeholder: '请输入${title}',

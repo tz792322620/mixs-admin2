@@ -64,7 +64,7 @@
       </a-select>
     </a-modal>
 
-    <a-modal v-model:visible="visibles" title="地图" >
+    <a-modal width="1000px" v-model:visible="visibles" title="地图" >
       <div class="map-page-container">
         <el-amap
           :center="center"
@@ -106,7 +106,7 @@ import {ref, computed, unref, onMounted} from 'vue';
   const visibles = ref(false);
   const xx: any = ref('');
   const dtxx: any = ref('');
-  const zoom = ref(12);
+  const zoom = ref(5);
   const center = ref([121.59996, 31.197646]);
   let map = null
 
@@ -265,7 +265,8 @@ const init = (e) => {
    function showPosition(record: Recordable) {
     visibles.value = true
     console.log(record);
-     defHttp.post({url: '/userlist/userList/showPosition', params:record}).then(res=>{
+    record.userId = record.id
+     defHttp.get({url: '/userlist/userList/showPosition', params:record}).then(res=>{
       console.log(res)
        dtxx.value = res
        res.map(item => {
@@ -373,7 +374,7 @@ const init = (e) => {
 <style scoped>
 .map-page-container{
   height: 50rem;
-  width: 100%;
+  width: 1000px;
 }
 .ant-select {
   box-sizing: border-box;

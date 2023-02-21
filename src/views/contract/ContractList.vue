@@ -4,9 +4,9 @@
    <BasicTable @register="registerTable" :rowSelection="rowSelection">
      <!--插槽:table标题-->
       <template #tableTitle>
-<!--          <a-button type="primary" @click="handleAdd" preIcon="ant-design:plus-outlined"> 新增</a-button>-->
-<!--          <a-button  type="primary" preIcon="ant-design:export-outlined" @click="onExportXls"> 导出</a-button>-->
-<!--          <j-upload-button  type="primary" preIcon="ant-design:import-outlined" @click="onImportXls">导入</j-upload-button>-->
+          <a-button type="primary" @click="handleAdd" preIcon="ant-design:plus-outlined"> 新增</a-button>
+          <a-button  type="primary" preIcon="ant-design:export-outlined" @click="onExportXls"> 导出</a-button>
+          <j-upload-button  type="primary" preIcon="ant-design:import-outlined" @click="onImportXls">导入</j-upload-button>
           <a-dropdown v-if="selectedRowKeys.length > 0">
               <template #overlay>
                 <a-menu>
@@ -23,8 +23,7 @@
       </template>
        <!--操作栏-->
       <template #action="{ record }">
-<!--        <TableAction :actions="getTableAction(record)" :dropDownActions="getDropDownAction(record)"/>-->
-        <TableAction :actions="getTableAction(record)" />
+        <TableAction :actions="getTableAction(record)" :dropDownActions="getDropDownAction(record)"/>
       </template>
       <!--字段回显插槽-->
       <template #htmlSlot="{text}">
@@ -40,32 +39,26 @@
       </template>
     </BasicTable>
     <!-- 表单区域 -->
-    <WithdrawalRecordModal @register="registerModal" @success="handleSuccess"></WithdrawalRecordModal>
-
-    <!--    详情弹窗-->
-    <WithdrawalRecordDialog :agentId="infoAgentId" :visible="infoDialogVisible" @handleOk="closeInfoDialog" />
-
-
+    <ContractModal @register="registerModal" @success="handleSuccess"></ContractModal>
   </div>
 </template>
 
-<script lang="ts" name="withdrawalrecord-withdrawalRecord" setup>
+<script lang="ts" name="business-contract" setup>
   import {ref, computed, unref} from 'vue';
   import {BasicTable, useTable, TableAction} from '/@/components/Table';
   import {useModal} from '/@/components/Modal';
   import { useListPage } from '/@/hooks/system/useListPage'
-  import WithdrawalRecordModal from './components/WithdrawalRecordModal.vue'
-  import {columns, searchFormSchema} from './WithdrawalRecord.data';
-  import {list, deleteOne, batchDelete, getImportUrl,getExportUrl} from './WithdrawalRecord.api';
+  import ContractModal from './components/ContractModal.vue'
+  import {columns, searchFormSchema} from './Contract.data';
+  import {list, deleteOne, batchDelete, getImportUrl,getExportUrl} from './Contract.api';
   import { downloadFile } from '/@/utils/common/renderUtils';
-  import WithdrawalRecordDialog from "/@/views/agentmanage/withdrawalrecord/components/WithdrawalRecordDialog.vue";
   const checkedKeys = ref<Array<string | number>>([]);
   //注册model
   const [registerModal, {openModal}] = useModal();
   //注册table数据
   const { prefixCls,tableContext,onExportXls,onImportXls } = useListPage({
       tableProps:{
-           title: '代理商提币记录',
+           title: '合约',
            api: list,
            columns,
            canResize:false,
@@ -80,12 +73,12 @@
               ],
             },
            actionColumn: {
-               width: 180,
+               width: 120,
                fixed:'right'
             },
       },
        exportConfig: {
-            name:"代理商提币记录",
+            name:"合约",
             url: getExportUrl,
           },
           importConfig: {
@@ -118,32 +111,13 @@
    /**
     * 详情
    */
-  // function handleDetail(record: Recordable) {
-  //    openModal(true, {
-  //      record,
-  //      isUpdate: true,
-  //      showFooter: false,
-  //    });
-  //  }
-
-  let infoDialogVisible = ref<boolean>(false);
-  let infoAgentId = ref<string>();
   function handleDetail(record: Recordable) {
-    infoAgentId.value = record.id
-    infoDialogVisible.value = true
      openModal(true, {
        record,
        isUpdate: true,
        showFooter: false,
      });
-  }
-
-  function closeInfoDialog(){
-    infoDialogVisible.value = false
-  }
-
-
-
+   }
    /**
     * 删除事件
     */
@@ -166,24 +140,12 @@
       * 操作栏
       */
   function getTableAction(record){
-     return [
-       {
-         label: '详情',
-         onClick: handleDetail.bind(null, record),
-       },
-       {
-         label: '编辑',
-         onClick: handleEdit.bind(null, record),
-       },
-       {
-         label: '删除',
-         color: 'error',
-         popConfirm: {
-           title: '是否确认删除',
-           confirm: handleDelete.bind(null, record),
+       return [
+         {
+           label: '编辑',
+           onClick: handleEdit.bind(null, record),
          }
-       }
-     ]
+       ]
    }
      /**
         * 下拉操作栏

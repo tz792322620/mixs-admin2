@@ -71,6 +71,11 @@ export const columns: BasicColumn[] = [
       return render.renderDict(text, 'is_in_out');
     },
   },
+  {
+    title: '创建时间',
+    align:"center",
+    dataIndex: 'createTime'
+  },
 ];
 
 export const searchFormSchema: FormSchema[] = [

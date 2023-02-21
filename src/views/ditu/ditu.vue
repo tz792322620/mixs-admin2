@@ -15,28 +15,43 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
+import { defHttp } from "/@/utils/http/axios";
 
 export default defineComponent({
   data() {
     return {
-      zoom: 12,
+      zoom: 5,
       center: [121.59996, 31.197646],
-      map: null
+      map: null,
+      dtxx:[]
     };
   },
 
   methods: {
     init(map) {
       const marker = new AMap.Marker({
-        position: [121.59996, 31.197646]
+        // position: [121.59996, 31.197646]
       });
       map.add(marker);
       this.map = map;
       console.log('map init: ', map)
+      // this.add()
+
+      defHttp.get({url: '/userlist/userList/showPosition',params: { userId: '' }}).then(res=>{
+        console.log(res)
+        this.dtxx = res
+        res.map(item => {
+          let dt = [item.longitude,item.latitude]
+          console.log('dt',dt)
+          this.add(dt);
+        })
+      });
+
     },
-    add() {
+    add(value) {
       const marker = new AMap.Marker({
-        position: [121.59996, 31.177646]
+        position: value,
+        title:'ceshi'
       });
       this.map.add(marker);
     }

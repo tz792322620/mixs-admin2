@@ -52,6 +52,7 @@
   import {columns, searchFormSchema} from './Transfer.data';
   import {list, deleteOne, batchDelete, getImportUrl,getExportUrl} from './Transfer.api';
   import {downloadFile} from '/@/utils/common/renderUtils';
+  import { defHttp } from "/@/utils/http/axios";
   const checkedKeys = ref<Array<string | number>>([]);
   //注册model
   const [registerModal, {openModal}] = useModal();
@@ -73,7 +74,7 @@
                 ],
             },
            actionColumn: {
-               width: 120,
+               width: 260,
                fixed:'right'
            },
         },
@@ -142,9 +143,18 @@
   function getTableAction(record){
        return [
          {
+           label: '审核通过',
+           onClick: handleok.bind(null, record),
+         },
+         {
+           label: '审核不通过',
+           onClick: handleno.bind(null, record),
+         },
+         {
            label: '编辑',
            onClick: handleEdit.bind(null, record),
-         }
+         },
+
        ]
    }
 
@@ -166,7 +176,33 @@
       }
     ]
   }
+  /**
+   * 审核通过
+   */
+  function handleok(record: Recordable) {
+    // console.log(record);
+    // record.status=1
+    // record.authorizeLevel=3
+    defHttp.post({url: '/transfer/transfer/applyOk', params:{id:record.id}}).then(res=>{
+      console.log(res)
+      reload();
+    });
+  }
 
+  /**
+   * 审核不通过
+   */
+  function handleno(record: Recordable){
+    // xx.value = record
+    // visible.value = true;
+    // record.status=2
+    // record.authorizeLevel=4
+    // record.reason="审核拒绝！"
+    defHttp.post({url: '/transfer/transfer/applyNo', params:{id:record.id}}).then(res=>{
+      console.log(res)
+      reload();
+    });
+  }
 </script>
 
 <style scoped>

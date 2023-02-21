@@ -23,8 +23,7 @@
       </template>
        <!--操作栏-->
       <template #action="{ record }">
-<!--        <TableAction :actions="getTableAction(record)" :dropDownActions="getDropDownAction(record)"/>-->
-        <TableAction :actions="getTableAction(record)" />
+        <TableAction :actions="getTableAction(record)" :dropDownActions="getDropDownAction(record)"/>
       </template>
       <!--字段回显插槽-->
       <template #htmlSlot="{text}">
@@ -32,7 +31,7 @@
       </template>
       <!--省市区字段回显插槽-->
       <template #pcaSlot="{text}">
-         {{ getAreaTextByCode(text) }}
+        {{ getAreaTextByCode(text) }}
       </template>
       <template #fileSlot="{text}">
          <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
@@ -40,59 +39,53 @@
       </template>
     </BasicTable>
     <!-- 表单区域 -->
-    <WithdrawalRecordModal @register="registerModal" @success="handleSuccess"></WithdrawalRecordModal>
-
-    <!--    详情弹窗-->
-    <WithdrawalRecordDialog :agentId="infoAgentId" :visible="infoDialogVisible" @handleOk="closeInfoDialog" />
-
-
+    <AddressBookModal @register="registerModal" @success="handleSuccess"></AddressBookModal>
   </div>
 </template>
 
-<script lang="ts" name="withdrawalrecord-withdrawalRecord" setup>
+<script lang="ts" name="business-addressBook" setup>
   import {ref, computed, unref} from 'vue';
   import {BasicTable, useTable, TableAction} from '/@/components/Table';
-  import {useModal} from '/@/components/Modal';
   import { useListPage } from '/@/hooks/system/useListPage'
-  import WithdrawalRecordModal from './components/WithdrawalRecordModal.vue'
-  import {columns, searchFormSchema} from './WithdrawalRecord.data';
-  import {list, deleteOne, batchDelete, getImportUrl,getExportUrl} from './WithdrawalRecord.api';
-  import { downloadFile } from '/@/utils/common/renderUtils';
-  import WithdrawalRecordDialog from "/@/views/agentmanage/withdrawalrecord/components/WithdrawalRecordDialog.vue";
+  import {useModal} from '/@/components/Modal';
+  import AddressBookModal from './components/AddressBookModal.vue'
+  import {columns, searchFormSchema} from './AddressBook.data';
+  import {list, deleteOne, batchDelete, getImportUrl,getExportUrl} from './AddressBook.api';
+  import {downloadFile} from '/@/utils/common/renderUtils';
   const checkedKeys = ref<Array<string | number>>([]);
   //注册model
   const [registerModal, {openModal}] = useModal();
-  //注册table数据
+   //注册table数据
   const { prefixCls,tableContext,onExportXls,onImportXls } = useListPage({
       tableProps:{
-           title: '代理商提币记录',
+           title: '会员转账地址簿',
            api: list,
            columns,
            canResize:false,
            formConfig: {
-              //labelWidth: 120,
-              schemas: searchFormSchema,
-              autoSubmitOnEnter:true,
-              showAdvancedButton:true,
-              fieldMapToNumber: [
-              ],
-              fieldMapToTime: [
-              ],
+                //labelWidth: 120,
+                schemas: searchFormSchema,
+                autoSubmitOnEnter:true,
+                showAdvancedButton:true,
+                fieldMapToNumber: [
+                ],
+                fieldMapToTime: [
+                ],
             },
            actionColumn: {
-               width: 180,
+               width: 120,
                fixed:'right'
-            },
-      },
-       exportConfig: {
-            name:"代理商提币记录",
+           },
+        },
+        exportConfig: {
+            name:"会员转账地址簿",
             url: getExportUrl,
-          },
-          importConfig: {
+        },
+        importConfig: {
             url: getImportUrl,
             success: handleSuccess
-          },
-  })
+        },
+    })
 
   const [registerTable, {reload},{ rowSelection, selectedRowKeys }] = tableContext
 
@@ -118,32 +111,13 @@
    /**
     * 详情
    */
-  // function handleDetail(record: Recordable) {
-  //    openModal(true, {
-  //      record,
-  //      isUpdate: true,
-  //      showFooter: false,
-  //    });
-  //  }
-
-  let infoDialogVisible = ref<boolean>(false);
-  let infoAgentId = ref<string>();
   function handleDetail(record: Recordable) {
-    infoAgentId.value = record.id
-    infoDialogVisible.value = true
      openModal(true, {
        record,
        isUpdate: true,
        showFooter: false,
      });
-  }
-
-  function closeInfoDialog(){
-    infoDialogVisible.value = false
-  }
-
-
-
+   }
    /**
     * 删除事件
     */
@@ -154,7 +128,7 @@
     * 批量删除事件
     */
   async function batchHandleDelete() {
-     await batchDelete({ids: selectedRowKeys.value}, handleSuccess);
+     await batchDelete({ids: selectedRowKeys.value},handleSuccess);
    }
    /**
     * 成功回调
@@ -166,43 +140,32 @@
       * 操作栏
       */
   function getTableAction(record){
-     return [
-       {
-         label: '详情',
-         onClick: handleDetail.bind(null, record),
-       },
-       {
-         label: '编辑',
-         onClick: handleEdit.bind(null, record),
-       },
-       {
-         label: '删除',
-         color: 'error',
-         popConfirm: {
-           title: '是否确认删除',
-           confirm: handleDelete.bind(null, record),
-         }
-       }
-     ]
-   }
-     /**
-        * 下拉操作栏
-        */
-  function getDropDownAction(record){
        return [
          {
-           label: '详情',
-           onClick: handleDetail.bind(null, record),
-         }, {
-           label: '删除',
-           popConfirm: {
-             title: '是否确认删除',
-             confirm: handleDelete.bind(null, record),
-           }
+           label: '编辑',
+           onClick: handleEdit.bind(null, record),
          }
        ]
    }
 
+
+  /**
+   * 下拉操作栏
+   */
+  function getDropDownAction(record){
+    return [
+      {
+        label: '详情',
+        onClick: handleDetail.bind(null, record),
+      }, {
+        label: '删除',
+        popConfirm: {
+          title: '是否确认删除',
+          confirm: handleDelete.bind(null, record),
+        }
+      }
+    ]
+  }
 
 </script>
 

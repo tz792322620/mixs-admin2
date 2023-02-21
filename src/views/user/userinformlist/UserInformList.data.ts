@@ -58,6 +58,11 @@ export const columns: BasicColumn[] = [
     align:"center",
     dataIndex: 'cardNum'
    },
+  {
+    title: '创建时间',
+    align:"center",
+    dataIndex: 'createTime'
+  },
    // {
    //  title: '正面',
    //  align:"center",

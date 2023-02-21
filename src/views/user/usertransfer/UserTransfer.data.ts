@@ -69,6 +69,11 @@ export const columns: BasicColumn[] = [
       return render.renderDict(text, 'trade_type');
     },
   },
+  {
+    title: '创建时间',
+    align:"center",
+    dataIndex: 'createTime'
+  },
 ];
 //查询数据
 export const searchFormSchema: FormSchema[] = [
