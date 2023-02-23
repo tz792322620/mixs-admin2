@@ -12,10 +12,10 @@
           :columns="idCardTable.columns"
           :dataSource="idCardTable.dataSource"
           :height="340"
-          :rowNumber="true"
-          :rowSelection="true"
+          :rowNumber="false"
+          :rowSelection="false"
           :disabled="formDisabled"
-          :toolbar="true"
+          :toolbar="false"
           />
       </a-tab-pane>
       <a-tab-pane tab="转账记录" key="transfer" :forceRender="true">
@@ -27,10 +27,10 @@
           :columns="transferTable.columns"
           :dataSource="transferTable.dataSource"
           :height="340"
-          :rowNumber="true"
-          :rowSelection="true"
+          :rowNumber="false"
+          :rowSelection="false"
           :disabled="formDisabled"
-          :toolbar="true"
+          :toolbar="false"
           />
       </a-tab-pane>
     </a-tabs>
@@ -84,8 +84,8 @@
             await setFieldsValue({
                 ...data.record,
             });
-             requestSubTableData(idCardList, {userId:data?.record}, idCardTable)
-             requestSubTableData(transferList, {virtualCoinAddress:data?.record}, transferTable)
+             requestSubTableData(idCardList, {userId:data?.record.userId}, idCardTable)
+             requestSubTableData(transferList, {virtualCoinAddress:data?.record.virtualCoinAddress}, transferTable)
         }
         // 隐藏底部时禁用整个表单
        setProps({ disabled: !data?.showFooter })
