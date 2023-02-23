@@ -56,7 +56,13 @@
       </a-select>
 
       <a-input v-model:value="value3" placeholder="请输入分佣比(%)" />
-      <a-input v-model:value="value4" placeholder="请输入结算周期" />
+<!--      <a-input v-model:value="value4" placeholder="请输入结算周期" />-->
+      <br/>
+      <a-select v-model:value="value4" placeholder="请选择结算时间">
+        <a-select-option value="0">日结</a-select-option>
+        <a-select-option value="1">周结</a-select-option>
+        <a-select-option value="1">月结</a-select-option>
+      </a-select>
       <br/>
       <a-select v-model:value="value5" placeholder="请选择结算周期类型（D/T）">
         <a-select-option value="0">D</a-select-option>
@@ -100,7 +106,7 @@ import {ref, computed, unref, onMounted} from 'vue';
   const value1 = ref<string>('请选择代理商等级');
   const value2 = ref('请输入返佣类型（手续费/打包/手续费+打包）');
   const value3 = ref('');
-  const value4 = ref('');
+  const value4 = ref('请选择结算时间');
   const value5 = ref('请选择结算周期类型（D/T）');
   const visible = ref(false);
   const visibles = ref(false);

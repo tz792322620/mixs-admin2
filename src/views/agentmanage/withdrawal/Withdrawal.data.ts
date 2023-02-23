@@ -32,6 +32,11 @@ export const columns: BasicColumn[] = [
       return render.renderDict(text, 'withdrawal_status');
     },
   },
+  {
+    title: '创建时间',
+    align:"center",
+    dataIndex: 'createTime'
+  },
 ];
 //查询数据
 export const searchFormSchema: FormSchema[] = [

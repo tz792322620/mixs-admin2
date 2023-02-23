@@ -189,6 +189,11 @@ export const agentWithdrawalColumns: JVxeColumn[] = [
       defaultValue:'',
       dictCode:'withdrawal_status'
     },
+  {
+    title: '创建时间',
+    align:"center",
+    dataIndex: 'createTime'
+  },
   ]
 
 

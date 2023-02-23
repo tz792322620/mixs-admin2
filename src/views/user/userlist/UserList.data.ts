@@ -38,7 +38,11 @@ export const columns: BasicColumn[] = [
       return render.renderDict(text, 'type');
     },
   },
-
+  {
+    title: '注册时间',
+    align:"center",
+    dataIndex: 'createTime'
+  },
   // {
   //   title: '认证等级',
   //   dataIndex: 'authorizeLevel',

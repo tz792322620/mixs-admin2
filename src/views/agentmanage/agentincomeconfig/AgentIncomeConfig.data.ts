@@ -5,6 +5,11 @@ import { render } from '/@/utils/common/renderUtils';
 //列表数据
 export const columns: BasicColumn[] = [
   {
+    title: '代理商编号',
+    align:"center",
+    dataIndex: 'agentId'
+  },
+  {
     title: '平台类型',
     dataIndex: 'platformType',
     sorter: true,
@@ -43,11 +48,7 @@ export const columns: BasicColumn[] = [
       return render.renderDict(text, 'trade_is');
     },
   },
-   {
-    title: '代理商编号',
-    align:"center",
-    dataIndex: 'agentId'
-   },
+
   {
     title: '手续费',
     dataIndex: 'type',
@@ -55,6 +56,11 @@ export const columns: BasicColumn[] = [
     customRender: ({ text }) => {
       return render.renderDict(text, 'sx_type');
     },
+  },
+  {
+    title: '创建时间',
+    align:"center",
+    dataIndex: 'createTime'
   },
 ];
 //查询数据
